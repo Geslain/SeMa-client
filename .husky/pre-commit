@@ -1,1 +1,22 @@
-npm test
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# shellcheck disable=SC2039
+source .env
+
+containerName=SeMa-client
+isRunning="$(docker ps -q -f name=$containerName)"
+if [ "$TEST_ON_COMMIT" = "true" ]
+then
+	if [ -z "$isRunning" ]
+	then
+	  echo "\n\033[31mPlease start docker container ($containerName) so test can run !\033[0m\n"
+	  exit 1
+	else
+	  npx lint-staged
+      docker exec $containerName yarn test
+      docker exec $containerName yarn test:e2e
+	fi
+else
+  npx lint-staged
+fi
