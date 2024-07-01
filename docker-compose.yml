@@ -1,0 +1,22 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sema-client
+    container_name: SeMa-client
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - NEXTAUTH_SECRET=${AUTH_SECRET}
+    ports:
+      - ${PORT}:3000
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - type: bind
+        source: ./next.config.mjs
+        target: /app/next.config.mjs
+      - type: bind
+        source: ./tailwind.config.ts
+        target: /app/tailwind.config.ts
