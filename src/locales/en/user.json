@@ -1,0 +1,12 @@
+{
+  "email": {
+    "validation": {
+      "invalid": "Invalid Email"
+    }
+  },
+  "password": {
+    "validation": {
+      "wrongFormat": "Wrong format"
+    }
+  }
+}
